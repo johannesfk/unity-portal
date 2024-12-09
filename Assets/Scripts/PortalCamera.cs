@@ -81,11 +81,11 @@ public class PortalCamera : MonoBehaviour
         Transform outTransform = outPortal.transform;
 
         Transform cameraTransform = portalCamera.transform;
-        cameraTransform.position = transform.position;
-        cameraTransform.rotation = transform.rotation;
+        cameraTransform.position = mainCamera.transform.position;
+        cameraTransform.rotation = mainCamera.transform.rotation;
 
-        for (int i = 0; i <= iterationID; ++i)
-        {
+        //for (int i = 0; i <= iterationID; ++i)
+        //{
             // Position the camera behind the other portal.
             Vector3 relativePos = inTransform.InverseTransformPoint(cameraTransform.position);
             relativePos = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativePos;
@@ -95,7 +95,7 @@ public class PortalCamera : MonoBehaviour
             Quaternion relativeRot = Quaternion.Inverse(inTransform.rotation) * cameraTransform.rotation;
             relativeRot = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeRot;
             cameraTransform.rotation = outTransform.rotation * relativeRot;
-        }
+        //}
 
         // Set the camera's oblique view frustum.
         Plane p = new Plane(-outTransform.forward, outTransform.position);
