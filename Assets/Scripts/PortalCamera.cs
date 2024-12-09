@@ -57,21 +57,21 @@ public class PortalCamera : MonoBehaviour
         if (portals[0].Renderer.isVisible)
         {
             portalCamera.targetTexture = tempTexture1;
-            RenderCamera(portals[0], portals[1], iterations - 1, SRC);
-            /* for (int i = iterations - 1; i >= 0; --i)
+            //RenderCamera(portals[0], portals[1], iterations - 1, SRC);
+            for (int i = iterations - 1; i >= 0; --i)
             {
                 RenderCamera(portals[0], portals[1], i, SRC);
-            } */
+            }
         }
 
         if (portals[1].Renderer.isVisible)
         {
             portalCamera.targetTexture = tempTexture2;
-            RenderCamera(portals[1], portals[0], iterations - 1, SRC);
-            /* for (int i = iterations - 1; i >= 0; --i)
+            //RenderCamera(portals[1], portals[0], iterations - 1, SRC);
+            for (int i = iterations - 1; i >= 0; --i)
             {
                 RenderCamera(portals[1], portals[0], i, SRC);
-            } */
+            }
         }
     }
 
@@ -84,8 +84,8 @@ public class PortalCamera : MonoBehaviour
         cameraTransform.position = mainCamera.transform.position;
         cameraTransform.rotation = mainCamera.transform.rotation;
 
-        //for (int i = 0; i <= iterationID; ++i)
-        //{
+        for (int i = 0; i <= iterationID; ++i)
+        {
             // Position the camera behind the other portal.
             Vector3 relativePos = inTransform.InverseTransformPoint(cameraTransform.position);
             relativePos = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativePos;
@@ -95,7 +95,7 @@ public class PortalCamera : MonoBehaviour
             Quaternion relativeRot = Quaternion.Inverse(inTransform.rotation) * cameraTransform.rotation;
             relativeRot = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeRot;
             cameraTransform.rotation = outTransform.rotation * relativeRot;
-        //}
+        }
 
         // Set the camera's oblique view frustum.
         Plane p = new Plane(-outTransform.forward, outTransform.position);
