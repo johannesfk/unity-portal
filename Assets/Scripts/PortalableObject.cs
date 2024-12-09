@@ -11,7 +11,7 @@ public class PortalableObject : MonoBehaviour
     private GameObject cloneObject;
 
     private int inPortalCount = 0;
-    
+
     private Portal inPortal;
     private Portal outPortal;
 
@@ -37,12 +37,12 @@ public class PortalableObject : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(inPortal == null || outPortal == null)
+        if (inPortal == null || outPortal == null)
         {
             return;
         }
 
-        if(cloneObject.activeSelf && inPortal.IsPlaced && outPortal.IsPlaced)
+        if (cloneObject.activeSelf && inPortal.IsPlaced && outPortal.IsPlaced)
         {
             var inTransform = inPortal.transform;
             var outTransform = outPortal.transform;
@@ -88,6 +88,7 @@ public class PortalableObject : MonoBehaviour
 
     public virtual void Warp()
     {
+        Debug.Log("Warping object");
         var inTransform = inPortal.transform;
         var outTransform = outPortal.transform;
 
@@ -106,9 +107,18 @@ public class PortalableObject : MonoBehaviour
         relativeVel = halfTurn * relativeVel;
         rigidbody.linearVelocity = outTransform.TransformDirection(relativeVel);
 
+        // Re-enable collisions with level geometry
+        Physics.IgnoreCollision(collider, inPortal.GetComponent<Collider>(), false);
+        Physics.IgnoreCollision(collider, outPortal.GetComponent<Collider>(), true);
+
         // Swap portal references.
         var tmp = inPortal;
         inPortal = outPortal;
         outPortal = tmp;
+
+        // Force physics update to detect new collisions
+        Physics.SyncTransforms();
+        // Make sure we're colliding with level geometry layer
+        Physics.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("LevelGeom"), false);
     }
 }
