@@ -46,4 +46,4 @@ The portals work is by putting a camera at the same positional offset to the por
 
 - [How were the portals in Portal created? - DigiDigger](https://www.youtube.com/watch?v=_SmPR5mvH7w)
 - [Fully Functional Portals in Unity URP - Daniel Ilett](https://youtu.be/PkGjYig8avo)
-- Mateterials from Quixel
+- Materials from Quixel
